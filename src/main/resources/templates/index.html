@@ -1,245 +1,165 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-    xmlns:th="http://www.thymeleaf.org">
-    
-    <head>
-        <meta charset="utf-8"/>
-        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-        <meta name="viewport" content="width=device-width, initial-scale=1"/>
-        <title th:text="${curriculo.nomeCurto}">Teste</title>
-        <link href="css/bootstrap.min.css" rel="stylesheet"/>
-        <link href="css/font-awesome.css" rel="stylesheet"/>
-        <link href="css/main.css" rel="stylesheet"/>
-        <link rel="stylesheet" href="css/main.css" type="text/css"/>
-        <link rel="icon" href="img/favicon.ico" />
+      xmlns:th="http://www.thymeleaf.org">
 
-        <!--[if lt IE 9]>
-          <script src="js/html5shiv.js"></script>
-          <script src="js/respond.min.js"></script>
-        <![endif]-->
-  </head>
-  <body>
-    <div class="conteudo">
-      <div class="row">
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title th:text="${#strings.capitalize(#strings.toLowerCase(curriculo.primeiroNome)) + ' ' + #strings.capitalize(#strings.toLowerCase(curriculo.ultimoNome))}">
+        Teste</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="css/font-awesome.css" rel="stylesheet"/>
+    <link href="css/main.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="css/main.css" type="text/css"/>
+    <link rel="icon" href="img/favicon.ico"/>
+
+    <!--[if lt IE 9]>
+    <script src="js/html5shiv.js"></script>
+    <script src="js/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+<div class="conteudo">
+    <div class="row">
         <div class="col-xs-12">
-          <div id="foto-cabecalho" class="text-center">
-            <!-- PHOTO (AVATAR) -->
-            <div id="foto">
-              <img src="img/avatar.jpg" alt="avatar"/>
+            <div id="foto-cabecalho" class="text-center">
+                <!-- PHOTO (AVATAR) -->
+                <div id="foto">
+                    <img src="img/avatar.jpg" alt="avatar"/>
+                </div>
+                <div id="texto-cabecalho">
+                    <h1><span th:text="${curriculo.primeiroNome + ' ' + curriculo.ultimoNome}">NOME</span></h1><br/>
+                    <h1 th:text="${curriculo.profissao }">PROFISSAO</h1>
+                </div>
             </div>
-            <div id="texto-cabecalho">
-                <h1><span>Ivan Queiroz</span></h1><br/><h1>Engenheiro de Software</h1>
-            </div>
-          </div>
         </div>
-      </div>
-      <div class="row">
+    </div>
+    <div class="row">
         <div class="col-xs-12 col-sm-7">
-          <!-- SOBRE MIM -->
-          <div class="box">
-            <h2>Sobre</h2>
-            <p>Sou <b>engenheiro de software</b>, iniciei na área de suporte por ser apaixonado por computadores
-                    e tecnologia, dessa paixão nasceu o amor por desenvolvimento de software e sistemas. Comecei na área 
-                    após conseguir a formação necessária e atualmente busco aumentar meu conhecimento para atuar 
-                    como arquiteto de software.</p>
-          </div>
-          <!-- EDUCAÇÃO -->
-          <div class="box">
-            <h2>Educação</h2>
-            <ul id="educacao" class="clearfix">
-              <li>
-                <div class="ano pull-left">2007</div>
-                <div class="descricao pull-right">
-                  <h3>Bacharelado em Sistemas de Informação</h3>
-                  <p>Completado em março de 2007 no Centro Universitário Estácio da Bahia</p>
+            <!-- SOBRE MIM -->
+            <div class="box">
+                <h2>Sobre</h2>
+                <p th:text="${curriculo.resumo}"></p>
+            </div>
+            <!-- EXPERIENCIA -->
+            <div class="box" th:each="experiencia, iterStat: ${experiencias}">
+                <h2 th:if="${iterStat.first}">Experiência</h2>
+                <div class="emprego clearfix">
+                    <div class="col-xs-3">
+                        <div class="onde" th:text="${experiencia.instituicao}">EMPRESA</div>
+                        <div class="ano"
+                             th:text="${experiencia.anoInicio + ' - '+ (experiencia.anoFim == '' ? 'Atual': experiencia.anoFim)}">
+                            PERIODO
+                        </div>
+                    </div>
+                    <div class="col-xs-9">
+                        <div class="profissao" th:text="${experiencia.titulo}">CARGO</div>
+                        <div class="descricao" th:text="${experiencia.descricao}">DESCRICAO</div>
+                    </div>
                 </div>
-              </li>
-              <li>
-                <div class="ano pull-left">2011</div>
-                <div class="descricao pull-right">
-                  <h3>MBA Profissional em Análise de Sistemas e Telecomunicações</h3>
-                  <p>Curso realizado na Escola Superior Aberta do Brasil (ESAB), completado em março de 2011.</p>
-                </div>
-              </li>
-              <li>
-                <div class="ano pull-left">2012</div>
-                <div class="descricao pull-right">
-                  <h3>Especialização em Análise, Projeto e Gerência de Sistemas</h3>
-                  <p>Completado em junho de 2012 no Centro Universitário Estácio da Bahia</p>
-                </div>
-              </li>
-            </ul>
-          </div>
-          <!-- EDUCAÇÃO -->
-          <div class="box">
-            <h2>Certificações</h2>
-            <ul id="certificacao" class="clearfix">
-              <li>
-                <div class="ano pull-left">2009</div>
-                <div class="descricao pull-right">
-                  <h3>OCJP - Oracle Certified Programmer for Java 5</h3>
-                  <p>Oracle</p>
-                </div>
-              </li>
-              <li>
-                <div class="ano pull-left">2011</div>
-                <div class="descricao pull-right">
-                  <h3>Certified Scrum Master</h3>
-                  <p>Scrum Alliance</p>
-                </div>
-              </li>
-              <li>
-                <div class="ano pull-left">2011</div>
-                <div class="descricao pull-right">
-                  <h3>MTA: Database Administration Fundamentals</h3>
-                  <p>Microsoft</p>
-                </div>
-              </li>
-            </ul>
-          </div>
-          <!-- EXPERIENCIA -->
-          <div class="box">
-            <h2>Experiência</h2>
-            <div class="emprego clearfix">
-              <div class="col-xs-3">
-                <div class="onde">Indra</div>
-                <div class="ano">2011 - Atual</div>
-              </div>
-              <div class="col-xs-9">
-                <div class="profissao">Engenheiro de Software</div>
-                <div class="descricao">Especificação, desenvolvimento e manutenção de sistemas em Java EE e C++ para a área de relacionamento com o cliente e jurídico da Vivo.</div>
-              </div>
             </div>
-            <div class="emprego clearfix">
-              <div class="col-xs-3">
-                <div class="onde">CPMBraxis</div>
-                <div class="ano">2010-2011</div>
-              </div>
-              <div class="col-xs-9">
-                <div class="profissao">Analista de Sistemas Pleno</div>
-                <div class="descricao">Desenvolvimento de sistemas em Java Web e C++ Builder para a área de relacionamento com o cliente da Vivo.</div>
-              </div>
+            <!-- EDUCAÇÃO -->
+            <div class="box">
+                <h2>Educação</h2>
+                <ul id="educacao" class="clearfix">
+                    <li th:each="formacao: ${formacoes}">
+                        <div class="ano pull-left" th:text="${formacao.anoFim}">ANO</div>
+                        <div class="descricao pull-right">
+                            <h3 th:text="${formacao.titulo}">TITULO</h3>
+                            <p th:text="${formacao.descricao}">DESCRICAO</p>
+                        </div>
+                    </li>
+                </ul>
             </div>
-            <div class="emprego clearfix">
-              <div class="col-xs-3">
-                <div class="onde">DBA Engenharia de Sistemas</div>
-                <div class="ano">2008-2010</div>
-              </div>
-              <div class="col-xs-9">
-                <div class="profissao">Analista de Sistemas Junior</div>
-                <div class="descricao">Desenvolvimento de sistemas em Java Web e C++ Builder para a área de relacionamento com o cliente da Vivo.</div>
-              </div>
+            <!-- CERTIFICAÇÕES -->
+            <div class="box">
+                <h2>Certificações</h2>
+                <ul id="certificacao" class="clearfix">
+                    <li th:each="certificacao: ${certificacoes}">
+                        <div class="ano pull-left" th:text="${certificacao.anoFim}">ANO</div>
+                        <div class="descricao pull-right">
+                            <h3 th:text="${certificacao.titulo}">TITULO</h3>
+                            <p th:text="${certificacao.descricao}">DESCRICAO</p>
+                        </div>
+                    </li>
+                </ul>
             </div>
-            <div class="emprego clearfix">
-              <div class="col-xs-3">
-                <div class="onde">DDS Telecomunicações</div>
-                <div class="ano">2006-2008</div>
-              </div>
-              <div class="col-xs-9">
-                <div class="profissao">Analista de Telecomunicações</div>
-                <div class="descricao">Controle e monitoria da infra-estrutura da rede de voz do callcenter Salvador da Vivo. Desenvolvimento de sistema de monitoria de URA em PHP.</div>
-              </div>
+            <!-- PALESTRAS -->
+            <div class="box">
+                <h2>Palestras aplicadas</h2>
+                <ul id="palestra" class="clearfix">
+                    <li th:each="palestra: ${palestras}">
+                        <div class="ano pull-left" th:text="${palestra.anoFim}">ANO</div>
+                        <div class="descricao pull-right">
+                            <h3 th:text="${palestra.titulo}">TITULO</h3>
+                            <p th:text="${palestra.descricao}">DESCRICAO</p>
+                            <a th:href="${palestra.linkReferencia}" th:text="${palestra.linkReferencia}"></a>
+                        </div>
+                    </li>
+                </ul>
             </div>
-            <div class="emprego clearfix">
-              <div class="col-xs-3">
-                <div class="onde">Atento do Brasil</div>
-                <div class="ano">2005-2006</div>
-              </div>
-              <div class="col-xs-9">
-                <div class="profissao">Analista de Microinformática</div>
-                <div class="descricao">Monitoria e suporte da infra de telefonia, Help Desk e controle de patrimônio da filial Salvador.</div>
-              </div>
-            </div>
-            <div class="emprego clearfix">
-              <div class="col-xs-3">
-                <div class="onde">CPM S/A</div>
-                <div class="ano">2004-2004</div>
-              </div>
-              <div class="col-xs-9">
-                <div class="profissao">Operador de Telecomunicações</div>
-                <div class="descricao">Monitoria e suporte da infra de telefonia e Help Desk do cliente Contax.</div>
-              </div>
-            </div>
-            <div class="emprego clearfix">
-              <div class="col-xs-3">
-                <div class="onde">HP do Brasil</div>
-                <div class="ano">2002-2004</div>
-              </div>
-              <div class="col-xs-9">
-                <div class="profissao">Analista Técnico</div>
-                <div class="descricao">Help Desk dos clientes Oribitall, Credicard e Redecard.</div>
-              </div>
-            </div>
-          </div>
         </div>
         <div class="col-xs-12 col-sm-5">
-          <!-- CONTATO -->
-          <div class="box clearfix">
-            <h2>Contato</h2>
-            <div class="item-contato">
-              <div class="icone pull-left text-center"><span class="fa fa-phone fa-fw"></span></div>
-              <div class="titulo somente pull-right">71 98773-1477</div>
+            <!-- CONTATO -->
+            <div class="box clearfix">
+                <h2>Contato</h2>
+                <div class="item-contato" th:each="contato: ${contatos}">
+                    <div class="icone pull-left text-center"><span th:class="${contato.classCssIcone}"></span></div>
+                    <div class="titulo somente pull-right" th:if="${!contato.mostraDescricao}" th:text="${contato.valorFormatado}"></div>
+                    <div class="titulo pull-right" th:if="${contato.mostraDescricao}" th:text="${contato.dados.descricao}"></div>
+                    <div class="descricao pull-right" th:if="${contato.mostraDescricao}" th:text="${contato.valorFormatado}"></div>
+                </div>
             </div>
-            <div class="item-contato">
-              <div class="icone pull-left text-center"><span class="fa fa-envelope fa-fw"></span></div>
-              <div class="titulo somente pull-right">ivanqueiroz@gmail.com</div>
+            <!-- CONHECIMENTOS -->
+            <div class="box">
+                <h2>Conhecimentos</h2>
+                <div class="conhecimento">
+                    <div th:each="conhecimento: ${conhecimentos}" class="item-conhecimento" th:attr="data-percent=${conhecimento.nivel}" th:text="${conhecimento.titulo}">TITULO</div>
+                    <div class="legenda-conhecimento clearfix">
+                        <div class="legenda-esquerda legenda">Iniciante</div>
+                        <div class="legenda-esquerda legenda"><span>Proficiente</span></div>
+                        <div class="legenda-direita legenda"><span>Especialista</span></div>
+                        <div class="legenda-direita legenda">Mestre</div>
+                    </div>
+                </div>
             </div>
-            <div class="item-contato">
-              <div class="icone pull-left text-center"><span class="fa fa-twitter fa-fw"></span></div>
-              <div class="titulo pull-right">Twitter</div>
-              <div class="descricao pull-right">https://twitter.com/ivanqueiroz</div>
+            <!-- LINGUAS -->
+            <div class="box">
+                <h2>Línguas</h2>
+                <div id="lingua-conhecimento">
+                    <div class="conhecimento">Inglês
+                        <div class="icons pull-right">
+                            <div th:attr="style='width:'+ ${lingua.nivel * 100}+'%'" class="icones-vermelho" th:each="lingua: ${linguas}"></div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="item-contato">
-              <div class="icone pull-left text-center"><span class="fa fa-facebook fa-fw"></span></div>
-              <div class="titulo pull-right">Facebook</div>
-              <div class="descricao pull-right">https://www.facebook.com/ivan.queiroz/</div>
+            <!-- HOBBIES -->
+            <div class="box">
+                <h2>Hobbies</h2>
+                <div class="hobby">Jogos</div>
+                <div class="hobby">Jiu Jitsu</div>
+                <div class="hobby">Programar</div>
             </div>
-            <div class="item-contato">
-              <div class="icone pull-left text-center"><span class="fa fa-skype fa-fw"></span></div>
-              <div class="titulo pull-right">Skype</div>
-              <div class="descricao pull-right">ifbcqueiroz</div>
+            <!-- ORGANIZAÇÕES -->
+            <div class="box">
+                <h2>Organizações</h2>
+                <div id="organizacao" class="clearfix content-heading">
+                    <img class="pull-left img-fluid" src="img/javabahia-logo-nova.png">
+                    <h4>Javabahia</h4>
+                    <p>JUG Leader</p>
+                </div>
+
             </div>
-          </div>
-          <!-- CONHECIMENTOS -->
-          <div class="box">
-            <h2>Conhecimentos</h2>
-            <div class="conhecimento">
-              <div class="item-conhecimento" data-percent="0.75">Java SE</div>
-              <div class="item-conhecimento" data-percent="0.60">Java EE</div>
-              <div class="item-conhecimento" data-percent="0.50">Spring</div>
-              <div class="item-conhecimento" data-percent="0.40">C++ Builder</div>
-              <div class="item-conhecimento" data-percent="0.60">SQL</div>
-              <div class="item-conhecimento" data-percent="0.25">PHP</div>
-              <div class="legenda-conhecimento clearfix">
-                <div class="legenda-esquerda legenda">Iniciante</div>
-                <div class="legenda-esquerda legenda"><span>Proficiente</span></div>
-                <div class="legenda-direita legenda"><span>Especialista</span></div>
-                <div class="legenda-direita legenda">Mestre</div>
-              </div>
-            </div>
-          </div>
-          <!-- LINGUAS -->
-          <div class="box">
-            <h2>Línguas</h2>
-            <div id="lingua-conhecimento">
-              <div class="conhecimento">Inglês <div class="icons pull-right"><div style="width: 80%;" class="icones-vermelho"></div></div></div>              
-            </div>
-          </div>
-          <!-- HOBBIES -->
-          <div class="box">
-            <h2>Passatempos</h2>
-            <div class="hobby">Jiu Jitsu</div>
-            <div class="hobby">Jogos eletrônicos</div>
-            <div class="hobby">Programar</div>
-          </div>
         </div>
-      </div>
     </div>
-    <!-- JQUERY -->
-    <script src="js/jquery.min.js"></script>
-    <!-- BOOTSTRAP -->
-    <script src="js/bootstrap.min.js"></script>
-    <!-- SCRIPTS -->
-    <script src="js/scripts.js"></script>
-  </body>
+</div>
+<!-- JQUERY -->
+<script src="js/jquery.min.js"></script>
+<!-- BOOTSTRAP -->
+<script src="js/bootstrap.min.js"></script>
+<!-- SCRIPTS -->
+<script src="js/scripts.js"></script>
+</body>
 </html>

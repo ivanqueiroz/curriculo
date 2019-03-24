@@ -22,3 +22,7 @@ window.onresize = function() {
 		callback();
 	}, 100);
 };
+
+$('.phone').text(function(i, text) {
+	return text.replace(/(\d\d\d)(\d\d\d)(\d\d\d\d)/, '$1-$2-$3');
+});
