@@ -7,17 +7,16 @@ import dev.ivanqueiroz.curriculo.dominio.historico.Historico
 import io.swagger.annotations.ApiModel
 import io.swagger.annotations.ApiModelProperty
 import org.springframework.hateoas.ResourceSupport
-import org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo
-import org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn
+import org.springframework.hateoas.mvc.ControllerLinkBuilder
 
-@ApiModel(description = "Classe que representa uma experiência profissional.")
-class ExperienciaResource @JsonCreator constructor(@JsonIgnore val historico: Historico) : ResourceSupport() {
+@ApiModel(description = "Classe que representa um treinamento realizado.")
+class TreinamentoResource @JsonCreator constructor(@JsonIgnore val historico: Historico) : ResourceSupport(){
 
-    @ApiModelProperty(notes = "Identificador único de experiência.", example = "1", required = true, position = 0)
+    @ApiModelProperty(notes = "Identificador único do treinamento.", example = "1", required = true, position = 0)
     val id: Long = historico.id
 
-    @ApiModelProperty(notes = "Nome da empresa trabalhada.", example = "Indra", position = 1)
-    @JsonProperty("empresa")
+    @ApiModelProperty(notes = "Local onde foi realizado o treinamento.", example = "UCSAL", position = 1)
+    @JsonProperty("local")
     val empresa: String = historico.instituicao
 
     @ApiModelProperty(notes = "Cargo ocupado durante a experiência.", example = "Analista de Sistemas", position = 2)
@@ -28,16 +27,13 @@ class ExperienciaResource @JsonCreator constructor(@JsonIgnore val historico: Hi
     @JsonProperty("resumo")
     val resumo: String = historico.descricao
 
-    @ApiModelProperty(notes = "Ano do início da experiência.", example = "2016", position = 4)
-    @JsonProperty("inicio")
-    val anoInicio: String = historico.anoInicio
-
-    @ApiModelProperty(notes = "Ano do fim da experiência.", example = "2017", position = 5)
-    @JsonProperty("fim")
+    @ApiModelProperty(notes = "Ano do treinamento.", example = "2017", position = 5)
+    @JsonProperty("ano")
     var anoFim: String = historico.anoFim
         get() = if ("" == historico.anoFim) "Atual" else historico.anoFim
 
     init {
-        add(linkTo(methodOn(HistoricoRestController::class.java).experiencia(id)).withSelfRel())
+        add(ControllerLinkBuilder.linkTo(ControllerLinkBuilder.methodOn(HistoricoRestController::class.java).treinamento(id)).withSelfRel())
     }
+
 }

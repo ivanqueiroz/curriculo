@@ -10,30 +10,30 @@ import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/conhecimentos")
-@Api(value = "Conhecimentos", description = "Conhecimentos profissionais de Ivan Queiroz")
+@Api(value = "Conhecimentos", description = "Conhecimentos profissionais")
 class ConhecimentoRestController {
 
     @Autowired
-    lateinit var conhecimentoService: ConhecimentoService
+    lateinit var conhecimentoRestService: ConhecimentoRestService
 
     @ApiOperation(value = "Obter um conhecimento pelo id")
     @GetMapping(value = ["/{id}"])
     fun conhecimento(@PathVariable id: Long): HttpEntity<ConhecimentoResource> {
-        val contatoResource = conhecimentoService.obterConhecimentoPorId(id)
+        val contatoResource = conhecimentoRestService.obterConhecimentoPorId(id)
         return ResponseEntity(contatoResource, HttpStatus.OK)
     }
 
     @ApiOperation(value = "Obter todos os conhecimentos")
     @GetMapping("/lista")
     fun conhecimentos(): ResponseEntity<List<ConhecimentoResource>>{
-        val todosConhecimentos = conhecimentoService.obterTodosConhecimentos();
+        val todosConhecimentos = conhecimentoRestService.obterTodosConhecimentos();
         return ResponseEntity(todosConhecimentos,HttpStatus.OK)
     }
 
     @ApiOperation(value = "Obter todos os conhecimentos referentes a um assunto informado")
     @GetMapping
     fun conhecimentosPorAssunto(@RequestParam("assunto") assunto: String):ResponseEntity<List<ConhecimentoResource>>{
-        val conhecimentosPeloAssunto = conhecimentoService.obterConhecimentoPeloAssunto(assunto)
+        val conhecimentosPeloAssunto = conhecimentoRestService.obterConhecimentoPeloAssunto(assunto)
         return ResponseEntity(conhecimentosPeloAssunto, HttpStatus.OK)
     }
 

@@ -30,8 +30,8 @@ class CurriculoService {
     @Autowired
     lateinit var contatoRepository: ContatoRepository
 
-    fun obterCurriculoPortugues(id: Long): Curriculo {
-        return curriculoRepository.findById(id).orElseThrow { RuntimeException("Curriculo não encontrado!") };
+    fun obterCurriculoPortugues(): Curriculo {
+        return curriculoRepository.findById(1L).orElseThrow { RuntimeException("Curriculo não encontrado!") };
     }
 
     fun obterHistoricoFormacao(): List<Historico> {
@@ -46,11 +46,11 @@ class CurriculoService {
         return historicoRepository.findAllByTipoHistoricoOrderByAnoInicioDesc(TipoHistorico.EXPERIENCIA)
     }
 
-    fun obterHistoricoPalestras(): List<Historico>{
-        return historicoRepository.findAllByTipoHistoricoOrderByAnoInicioDesc(TipoHistorico.PALESTRAS_APLICADAS)
+    fun obterHistoricoPalestras(): List<Historico> {
+        return historicoRepository.findAllByTipoHistoricoOrderByAnoInicioDesc(TipoHistorico.PALESTRAS_APLICADAS).stream().sorted { h1, h2 -> h1.anoFim.compareTo(h2.anoFim) }.collect(Collectors.toList())
     }
 
-    fun obterHistoricoTreinamentos(): List<Historico>{
+    fun obterHistoricoTreinamentos(): List<Historico> {
         return historicoRepository.findAllByTipoHistoricoOrderByAnoInicioDesc(TipoHistorico.TREINAMENTOS_APLICADOS)
     }
 

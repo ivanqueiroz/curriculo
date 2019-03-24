@@ -29,7 +29,7 @@ class SwaggerConfig {
     private fun metaData(): ApiInfo {
         return ApiInfoBuilder()
                 .title("Curriculo Ivan Queiroz REST API")
-                .description("\"REST API para interessados em informações\"")
+                .description("\"REST API de meu curriculo profissional\"")
                 .version("1.0.0")
                 .license("Apache License Version 2.0")
                 .licenseUrl("https://www.apache.org/licenses/LICENSE-2.0\"")

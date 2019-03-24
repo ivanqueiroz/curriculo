@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service
 import java.lang.RuntimeException
 
 @Service
-class ConhecimentoService {
+class ConhecimentoRestService {
 
     @Autowired
     lateinit var conhecimentoRepository: ConhecimentoRepository

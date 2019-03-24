@@ -5,8 +5,10 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.RequestMapping
+import springfox.documentation.annotations.ApiIgnore
 
 @Controller
+@ApiIgnore
 class CurriculoController {
 
     @Autowired
@@ -14,7 +16,7 @@ class CurriculoController {
 
     @RequestMapping("/")
     fun index(model: Model): String {
-        val curriculo = curriculoService.obterCurriculoPortugues(1L);
+        val curriculo = curriculoService.obterCurriculoPortugues();
         model.addAttribute("curriculo", curriculo);
 
         val formacoes = curriculoService.obterHistoricoFormacao()

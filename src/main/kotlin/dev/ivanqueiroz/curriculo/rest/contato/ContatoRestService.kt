@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service
 import java.lang.RuntimeException
 
 @Service
-class ContatoService {
+class ContatoRestService {
 
     @Autowired
     lateinit var contatoRepository: ContatoRepository

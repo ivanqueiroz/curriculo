@@ -137,19 +137,19 @@ class DbInitializer : CommandLineRunner {
     private fun preencheCertificacoes(historicos: MutableList<Historico>) {
         var certificacaoOcjp = Historico("OCJP - Oracle Certified Programmer for Java 5")
         certificacaoOcjp.tipoHistorico = TipoHistorico.CERTIFICACOES
-        certificacaoOcjp.descricao = "Oracle"
+        certificacaoOcjp.instituicao = "Oracle"
         certificacaoOcjp.anoFim = "2009"
         historicos.add(certificacaoOcjp)
 
         var certificacaoScrum = Historico("Certified Scrum Master")
         certificacaoScrum.tipoHistorico = TipoHistorico.CERTIFICACOES
-        certificacaoScrum.descricao = "Scrum Alliance"
+        certificacaoScrum.instituicao = "Scrum Alliance"
         certificacaoScrum.anoFim = "2011"
         historicos.add(certificacaoScrum)
 
         var certificacaoMta = Historico("MTA: Database Administration Fundamentals")
         certificacaoMta.tipoHistorico = TipoHistorico.CERTIFICACOES
-        certificacaoMta.descricao = "Microsoft"
+        certificacaoMta.instituicao = "Microsoft"
         certificacaoMta.anoFim = "2011"
         historicos.add(certificacaoMta)
     }
@@ -157,26 +157,30 @@ class DbInitializer : CommandLineRunner {
     private fun preencheEducacao(historicos: MutableList<Historico>) {
         //EDUCAÇÃO
         var educacaoFib = Historico("Bacharelado em Sistemas de Informação")
+        educacaoFib.instituicao = "Centro Universitário Estácio da Bahia"
         educacaoFib.anoFim = "2007"
         educacaoFib.descricao = "Completado em março de 2007 no Centro Universitário Estácio da Bahia"
         educacaoFib.tipoHistorico = TipoHistorico.EDUCACAO
         historicos.add(educacaoFib)
 
         var educacaoMbaTelecom = Historico("MBA Profissional em Análise de Sistemas e Telecomunicações")
+        educacaoMbaTelecom.instituicao = "Escola Superior Aberta do Brasil (ESAB)"
         educacaoMbaTelecom.anoFim = "2011"
         educacaoMbaTelecom.descricao = "Graduação realizada na Escola Superior Aberta do Brasil (ESAB), completado em março de 2011."
         educacaoMbaTelecom.tipoHistorico = TipoHistorico.EDUCACAO
         historicos.add(educacaoMbaTelecom)
 
         var educacaoMbaProjetoSistemas = Historico("Especialização em Análise, Projeto e Gerência de Sistemas")
+        educacaoMbaProjetoSistemas.instituicao = "Centro Universitário Estácio da Bahia"
         educacaoMbaProjetoSistemas.anoFim = "2012"
         educacaoMbaProjetoSistemas.descricao = "Completado em junho de 2012 no Centro Universitário Estácio da Bahia"
         educacaoMbaProjetoSistemas.tipoHistorico = TipoHistorico.EDUCACAO
         historicos.add(educacaoMbaProjetoSistemas)
 
         var educacaoGerenciaProjetos = Historico("MBA em Gerência de Projetos")
+        educacaoGerenciaProjetos.instituicao = "Unijorge"
         educacaoGerenciaProjetos.anoFim = "2019"
-        educacaoGerenciaProjetos.descricao = "Em curso com previsão de finalização em maio 2019"
+        educacaoGerenciaProjetos.descricao = "Em curso na Unijorge, com previsão de finalização em maio 2019"
         educacaoGerenciaProjetos.tipoHistorico = TipoHistorico.EDUCACAO
         historicos.add(educacaoGerenciaProjetos)
     }
