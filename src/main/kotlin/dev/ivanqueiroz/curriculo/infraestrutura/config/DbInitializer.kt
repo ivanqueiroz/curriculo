@@ -81,7 +81,8 @@ class DbInitializer : CommandLineRunner {
         var historicoIndra = Historico("Arquiteto de Software")
         historicoIndra.instituicao = "INDRA"
         historicoIndra.anoInicio = "2011"
-        historicoIndra.descricao = "Especificação, desenvolvimento e manutenção de sistemas em Java EE e C++ para a área de relacionamento com o cliente e jurídico da Telefonica."
+        historicoIndra.descricao = "Especificação, desenvolvimento e manutenção de sistemas em Java EE e C++ para a área de relacionamento com o cliente e jurídico da Telefonica. " +
+                "Também atuando como líder técnico e arquiteto de software."
         historicoIndra.tipoHistorico = TipoHistorico.EXPERIENCIA
         historicos.add(historicoIndra)
 
