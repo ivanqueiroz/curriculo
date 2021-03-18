@@ -12,7 +12,7 @@
     <artifactId>curriculo</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>curriculo</name>
-    <description>Demo project for Spring Boot</description>
+    <description>Projeto de curriculo feito com Kotlin</description>
 
     <properties>
         <java.version>1.8</java.version>
