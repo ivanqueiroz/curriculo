@@ -21,7 +21,7 @@ import org.springframework.stereotype.Component
 class DbInitializer : CommandLineRunner {
 
     @Autowired
-    lateinit var curriculoRepositorio: CurriculoRepository;
+    lateinit var curriculoRepositorio: CurriculoRepository
 
     @Autowired
     lateinit var historicoRepository: HistoricoRepository
@@ -34,7 +34,7 @@ class DbInitializer : CommandLineRunner {
 
     override fun run(vararg args: String?) {
 
-        if (curriculoRepositorio.count() == 0L) {
+        if (curriculoRepositorio.existsById(1L)) {
             contatoRepository.deleteAll()
             conhecimentoRepository.deleteAll()
             historicoRepository.deleteAll()
@@ -69,7 +69,7 @@ class DbInitializer : CommandLineRunner {
         //PALESTRAS
         preenchePalestras(historicos)
 
-        preencheTreinamentos(historicos);
+        preencheTreinamentos(historicos)
 
         curriculo.historicos = historicos
 
