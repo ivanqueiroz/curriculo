@@ -34,7 +34,7 @@ class DbInitializer : CommandLineRunner {
 
     override fun run(vararg args: String?) {
 
-        if (curriculoRepositorio.existsById(1L)) {
+        if (!curriculoRepositorio.existsById(1L)) {
             contatoRepository.deleteAll()
             conhecimentoRepository.deleteAll()
             historicoRepository.deleteAll()
