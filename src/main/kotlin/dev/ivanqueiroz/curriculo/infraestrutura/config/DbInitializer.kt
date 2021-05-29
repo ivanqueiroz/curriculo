@@ -273,7 +273,7 @@ class DbInitializer : CommandLineRunner {
         treinamentoSpringBoot042017.descricao = "Minicurso de Spring Boot I Community Day da Faculdade Visconde de Cairú"
         treinamentoSpringBoot042017.linkReferencia = "https://www.cairu.br/portal/eventos/icommunity_day_TI/"
         treinamentoSpringBoot042017.instituicao = "Faculdade Visconde de Cairu"
-        treinamentoSpringBoot042017.tipoHistorico = TipoHistorico.TREINAMENTOS_APLICADOS
+        treinamentoSpringBoot042017.tipoHistorico = TipoHistorico.CURSOS_APLICADOS
         historicos.add(treinamentoSpringBoot042017)
 
         val treinamentoSpringBoot102018 = Historico("Desenvolvendo Rapidamente Aplicações Web com Spring Boot")
@@ -281,7 +281,7 @@ class DbInitializer : CommandLineRunner {
         treinamentoSpringBoot102018.descricao = "V Simpósio de Tecnologia da Informação da Faculdade Visconde de Cairú"
         treinamentoSpringBoot102018.linkReferencia = "https://www.cairu.br/portal/noticias/index.php?id=169"
         treinamentoSpringBoot102018.instituicao = "Faculdade Visconde de Cairu"
-        treinamentoSpringBoot102018.tipoHistorico = TipoHistorico.TREINAMENTOS_APLICADOS
+        treinamentoSpringBoot102018.tipoHistorico = TipoHistorico.CURSOS_APLICADOS
         historicos.add(treinamentoSpringBoot102018)
     }
 }

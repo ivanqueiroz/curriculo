@@ -58,12 +58,12 @@ class HistoricoRestService {
     }
 
     fun obterTodosTreinamentos(): List<TreinamentoResource> {
-        val historicos = historicoRepository.findAllByTipoHistorico(TipoHistorico.TREINAMENTOS_APLICADOS)
+        val historicos = historicoRepository.findAllByTipoHistorico(TipoHistorico.CURSOS_APLICADOS)
         val treinamentos = historicos.map { historico -> TreinamentoResource(historico) }
         return treinamentos
     }
 
     fun obterTreinamentoPorId(id: Long): TreinamentoResource {
-        return TreinamentoResource(historicoRepository.findByIdAndTipoHistorico(id, TipoHistorico.TREINAMENTOS_APLICADOS).orElseThrow { RuntimeException("Registro não encontrado") })
+        return TreinamentoResource(historicoRepository.findByIdAndTipoHistorico(id, TipoHistorico.CURSOS_APLICADOS).orElseThrow { RuntimeException("Registro não encontrado") })
     }
 }

@@ -51,7 +51,7 @@ class CurriculoService {
     }
 
     fun obterHistoricoTreinamentos(): List<Historico> {
-        return historicoRepository.findAllByTipoHistoricoOrderByAnoInicioDesc(TipoHistorico.TREINAMENTOS_APLICADOS)
+        return historicoRepository.findAllByTipoHistoricoOrderByAnoInicioDesc(TipoHistorico.CURSOS_APLICADOS)
     }
 
     private fun obterHistoricoPorTipo(tipoHistorico: TipoHistorico): List<Historico> {
