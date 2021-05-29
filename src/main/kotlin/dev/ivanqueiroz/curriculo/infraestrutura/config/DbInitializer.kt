@@ -34,12 +34,14 @@ class DbInitializer : CommandLineRunner {
 
     override fun run(vararg args: String?) {
 
-        contatoRepository.deleteAll()
-        conhecimentoRepository.deleteAll()
-        historicoRepository.deleteAll()
-        curriculoRepositorio.deleteAll()
-        val curriculo = preencheCurriculo()
-        curriculoRepositorio.save(curriculo)
+        if (curriculoRepositorio.count() == 0L) {
+            contatoRepository.deleteAll()
+            conhecimentoRepository.deleteAll()
+            historicoRepository.deleteAll()
+            curriculoRepositorio.deleteAll()
+            val curriculo = preencheCurriculo()
+            curriculoRepositorio.save(curriculo)
+        }
     }
 
     private fun preencheCurriculo(): Curriculo {
@@ -67,6 +69,8 @@ class DbInitializer : CommandLineRunner {
         //PALESTRAS
         preenchePalestras(historicos)
 
+        preencheTreinamentos(historicos);
+
         curriculo.historicos = historicos
 
         //CONTATOS
@@ -78,15 +82,16 @@ class DbInitializer : CommandLineRunner {
     }
 
     private fun preencheHistorico(historicos: MutableList<Historico>) {
-        var historicoIndra = Historico("Arquiteto de Software")
+        val historicoIndra = Historico("Arquiteto de Software")
         historicoIndra.instituicao = "INDRA"
         historicoIndra.anoInicio = "2011"
-        historicoIndra.descricao = "Especificação, desenvolvimento e manutenção de sistemas em Java EE e C++ para a área de relacionamento com o cliente e jurídico da Telefonica. " +
-                "Também atuando como líder técnico e arquiteto de software."
+        historicoIndra.descricao =
+            "Especificação, desenvolvimento e manutenção de sistemas em Java EE e C++ para a área de relacionamento com o cliente e jurídico da Telefonica. " +
+                    "Também atuando como líder técnico e arquiteto de software."
         historicoIndra.tipoHistorico = TipoHistorico.EXPERIENCIA
         historicos.add(historicoIndra)
 
-        var historicoCpmBraxis = Historico("Analista de Sistemas Pleno")
+        val historicoCpmBraxis = Historico("Analista de Sistemas Pleno")
         historicoCpmBraxis.instituicao = "Capgemini"
         historicoCpmBraxis.anoInicio = "2010"
         historicoCpmBraxis.anoFim = "2011"
@@ -94,7 +99,7 @@ class DbInitializer : CommandLineRunner {
         historicoCpmBraxis.tipoHistorico = TipoHistorico.EXPERIENCIA
         historicos.add(historicoCpmBraxis)
 
-        var historicoDba = Historico("Analista de Sistemas Júnior")
+        val historicoDba = Historico("Analista de Sistemas Júnior")
         historicoDba.instituicao = "DBA Engenharia de Sistemas"
         historicoDba.anoInicio = "2008"
         historicoDba.anoFim = "2010"
@@ -102,23 +107,24 @@ class DbInitializer : CommandLineRunner {
         historicoDba.tipoHistorico = TipoHistorico.EXPERIENCIA
         historicos.add(historicoDba)
 
-        var historicoDds = Historico("Analista de Telecomunicações")
+        val historicoDds = Historico("Analista de Telecomunicações")
         historicoDds.instituicao = "DDS Telecomunicações"
         historicoDds.anoInicio = "2006"
         historicoDds.anoFim = "2008"
-        historicoDds.descricao = "Controle e monitoria da infra-estrutura da rede de voz do callcenter Salvador da Vivo. Desenvolvimento de sistema de monitoria de URA em PHP."
+        historicoDds.descricao =
+            "Controle e monitoria da infra-estrutura da rede de voz do callcenter Salvador da Vivo. Desenvolvimento de sistema de monitoria de URA em PHP."
         historicoDds.tipoHistorico = TipoHistorico.EXPERIENCIA
         historicos.add(historicoDds)
 
-        var historicoAtento = Historico("Analista de Microinformática")
-        historicoAtento.instituicao = "Atendo do Brasil"
+        val historicoAtento = Historico("Analista de Microinformática")
+        historicoAtento.instituicao = "Atento do Brasil"
         historicoAtento.anoInicio = "2005"
         historicoAtento.anoFim = "2006"
         historicoAtento.descricao = "Monitoria e suporte da infra de telefonia, Help Desk e controle de patrimônio da filial Salvador."
         historicoAtento.tipoHistorico = TipoHistorico.EXPERIENCIA
         historicos.add(historicoAtento)
 
-        var historicoCpm = Historico("Operador de Telecomunicações")
+        val historicoCpm = Historico("Operador de Telecomunicações")
         historicoCpm.instituicao = "Capgemini"
         historicoCpm.anoInicio = "2004"
         historicoCpm.anoFim = "2004"
@@ -126,7 +132,7 @@ class DbInitializer : CommandLineRunner {
         historicoCpm.tipoHistorico = TipoHistorico.EXPERIENCIA
         historicos.add(historicoCpm)
 
-        var historicoHp = Historico("Analista Técnico")
+        val historicoHp = Historico("Analista Técnico")
         historicoHp.instituicao = "HP do Brasil"
         historicoHp.anoInicio = "2002"
         historicoHp.anoFim = "2004"
@@ -136,19 +142,19 @@ class DbInitializer : CommandLineRunner {
     }
 
     private fun preencheCertificacoes(historicos: MutableList<Historico>) {
-        var certificacaoOcjp = Historico("OCJP - Oracle Certified Programmer for Java 5")
+        val certificacaoOcjp = Historico("OCJP - Oracle Certified Programmer for Java 5")
         certificacaoOcjp.tipoHistorico = TipoHistorico.CERTIFICACOES
         certificacaoOcjp.instituicao = "Oracle"
         certificacaoOcjp.anoFim = "2009"
         historicos.add(certificacaoOcjp)
 
-        var certificacaoScrum = Historico("Certified Scrum Master")
+        val certificacaoScrum = Historico("Certified Scrum Master")
         certificacaoScrum.tipoHistorico = TipoHistorico.CERTIFICACOES
         certificacaoScrum.instituicao = "Scrum Alliance"
         certificacaoScrum.anoFim = "2011"
         historicos.add(certificacaoScrum)
 
-        var certificacaoMta = Historico("MTA: Database Administration Fundamentals")
+        val certificacaoMta = Historico("MTA: Database Administration Fundamentals")
         certificacaoMta.tipoHistorico = TipoHistorico.CERTIFICACOES
         certificacaoMta.instituicao = "Microsoft"
         certificacaoMta.anoFim = "2011"
@@ -157,28 +163,28 @@ class DbInitializer : CommandLineRunner {
 
     private fun preencheEducacao(historicos: MutableList<Historico>) {
         //EDUCAÇÃO
-        var educacaoFib = Historico("Bacharelado em Sistemas de Informação")
+        val educacaoFib = Historico("Bacharelado em Sistemas de Informação")
         educacaoFib.instituicao = "Centro Universitário Estácio da Bahia"
         educacaoFib.anoFim = "2007"
         educacaoFib.descricao = "Completado em março de 2007 no Centro Universitário Estácio da Bahia"
         educacaoFib.tipoHistorico = TipoHistorico.EDUCACAO
         historicos.add(educacaoFib)
 
-        var educacaoMbaTelecom = Historico("MBA Profissional em Análise de Sistemas e Telecomunicações")
+        val educacaoMbaTelecom = Historico("MBA Profissional em Análise de Sistemas e Telecomunicações")
         educacaoMbaTelecom.instituicao = "Escola Superior Aberta do Brasil (ESAB)"
         educacaoMbaTelecom.anoFim = "2011"
         educacaoMbaTelecom.descricao = "Graduação realizada na Escola Superior Aberta do Brasil (ESAB), completado em março de 2011."
         educacaoMbaTelecom.tipoHistorico = TipoHistorico.EDUCACAO
         historicos.add(educacaoMbaTelecom)
 
-        var educacaoMbaProjetoSistemas = Historico("Especialização em Análise, Projeto e Gerência de Sistemas")
+        val educacaoMbaProjetoSistemas = Historico("Especialização em Análise, Projeto e Gerência de Sistemas")
         educacaoMbaProjetoSistemas.instituicao = "Centro Universitário Estácio da Bahia"
         educacaoMbaProjetoSistemas.anoFim = "2012"
         educacaoMbaProjetoSistemas.descricao = "Completado em junho de 2012 no Centro Universitário Estácio da Bahia"
         educacaoMbaProjetoSistemas.tipoHistorico = TipoHistorico.EDUCACAO
         historicos.add(educacaoMbaProjetoSistemas)
 
-        var educacaoGerenciaProjetos = Historico("MBA em Gerência de Projetos")
+        val educacaoGerenciaProjetos = Historico("MBA em Gerência de Projetos")
         educacaoGerenciaProjetos.instituicao = "Unijorge"
         educacaoGerenciaProjetos.anoFim = "2019"
         educacaoGerenciaProjetos.descricao = "Em curso na Unijorge, com previsão de finalização em maio 2019"
@@ -188,30 +194,31 @@ class DbInitializer : CommandLineRunner {
 
     private fun preencheConhecimentos(curriculo: Curriculo) {
         //CONHECIMENTOS
-        var conhecimentoJava = Conhecimento("Java SE", 0.75f, TipoConhecimento.ESPECIFICO)
-        var conhecimentoJavaEE = Conhecimento("Java EE", 0.60f, TipoConhecimento.ESPECIFICO)
-        var conhecimentoSpring = Conhecimento("Spring", 0.50f, TipoConhecimento.ESPECIFICO)
-        var conhecimtnoCplusPlus = Conhecimento("C++ Builder", 0.40f, TipoConhecimento.ESPECIFICO)
-        var conhecimentoSql = Conhecimento("SQL", 0.60f, TipoConhecimento.ESPECIFICO)
-        var conhemcimentoPhp = Conhecimento("PHP", 0.25f, TipoConhecimento.ESPECIFICO)
-        var conhecimentoIngles = Conhecimento("Inglês", 0.8f, TipoConhecimento.LINGUAS)
+        val conhecimentoJava = Conhecimento("Java SE", 0.75f, TipoConhecimento.ESPECIFICO)
+        val conhecimentoJavaEE = Conhecimento("Java EE", 0.60f, TipoConhecimento.ESPECIFICO)
+        val conhecimentoSpring = Conhecimento("Spring", 0.50f, TipoConhecimento.ESPECIFICO)
+        val conhecimtnoCplusPlus = Conhecimento("C++ Builder", 0.40f, TipoConhecimento.ESPECIFICO)
+        val conhecimentoSql = Conhecimento("SQL", 0.60f, TipoConhecimento.ESPECIFICO)
+        val conhemcimentoPhp = Conhecimento("PHP", 0.25f, TipoConhecimento.ESPECIFICO)
+        val conhecimentoIngles = Conhecimento("Inglês", 0.8f, TipoConhecimento.LINGUAS)
 
-        curriculo.conhecimentos = arrayListOf(conhecimentoJava, conhecimentoJavaEE, conhecimentoSpring, conhecimtnoCplusPlus, conhecimentoSql, conhemcimentoPhp, conhecimentoIngles)
+        curriculo.conhecimentos =
+            arrayListOf(conhecimentoJava, conhecimentoJavaEE, conhecimentoSpring, conhecimtnoCplusPlus, conhecimentoSql, conhemcimentoPhp, conhecimentoIngles)
     }
 
     private fun preencheContatos(curriculo: Curriculo) {
-        var contatoTelefone = Contato("5571987731477", "Telefone", TipoContato.TELEFONE)
-        var contatoEmail = Contato("ivanqueiroz@gmail.com", "E-Mail", TipoContato.EMAIL)
-        var contatoTwitter = Contato("https://twitter.com/ivanqueiroz", "Twitter", TipoContato.TWITTER)
-        var contatoFacebook = Contato("https://www.facebook.com/ivan.queiroz/", "Facebook", TipoContato.FACEBOOK)
-        var contatoSkype = Contato("ifbcqueiroz", "Skype", TipoContato.SKYPE)
-        var contatoLinkedin = Contato("https://www.linkedin.com/in/ivanqueiroz/", "Linkedin", TipoContato.LINKEDIN)
+        val contatoTelefone = Contato("5571987731477", "Telefone", TipoContato.TELEFONE)
+        val contatoEmail = Contato("ivanqueiroz@gmail.com", "E-Mail", TipoContato.EMAIL)
+        val contatoTwitter = Contato("https://twitter.com/ivanqueiroz", "Twitter", TipoContato.TWITTER)
+        val contatoFacebook = Contato("https://www.facebook.com/ivan.queiroz/", "Facebook", TipoContato.FACEBOOK)
+        val contatoSkype = Contato("ifbcqueiroz", "Skype", TipoContato.SKYPE)
+        val contatoLinkedin = Contato("https://www.linkedin.com/in/ivanqueiroz/", "Linkedin", TipoContato.LINKEDIN)
 
         curriculo.contatos = arrayListOf(contatoTelefone, contatoEmail, contatoTwitter, contatoFacebook, contatoSkype, contatoLinkedin)
     }
 
     private fun preenchePalestras(historicos: MutableList<Historico>) {
-        var palestraNoSqlBa032018 = Historico("Spring Data Neo4J com Spring Boot")
+        val palestraNoSqlBa032018 = Historico("Spring Data Neo4J com Spring Boot")
         palestraNoSqlBa032018.anoFim = "2018"
         palestraNoSqlBa032018.descricao = "NoSql – BA: Conferência Baiana de NoSql 2018"
         palestraNoSqlBa032018.linkReferencia = "http://www.nosqlba.org/2017/index.html"
@@ -219,7 +226,7 @@ class DbInitializer : CommandLineRunner {
         palestraNoSqlBa032018.tipoHistorico = TipoHistorico.PALESTRAS_APLICADAS
         historicos.add(palestraNoSqlBa032018)
 
-        var palestraNoSqlBa032017 = Historico("Neo4J – Banco Orientado a Grafos")
+        val palestraNoSqlBa032017 = Historico("Neo4J – Banco Orientado a Grafos")
         palestraNoSqlBa032017.anoFim = "2017"
         palestraNoSqlBa032017.descricao = "NoSql – BA: Conferência Baiana de NoSql 2017"
         palestraNoSqlBa032017.linkReferencia = "http://www.nosqlba.org/2017/index.html"
@@ -227,7 +234,7 @@ class DbInitializer : CommandLineRunner {
         palestraNoSqlBa032017.tipoHistorico = TipoHistorico.PALESTRAS_APLICADAS
         historicos.add(palestraNoSqlBa032017)
 
-        var palestraUfba122016 = Historico("Spring Data JPA")
+        val palestraUfba122016 = Historico("Spring Data JPA")
         palestraUfba122016.anoFim = "2016"
         palestraUfba122016.descricao = "Tour na UFBA Javabahia"
         palestraUfba122016.linkReferencia = "http://javabahia.blogspot.com.br/2016/12/ultima-atividade-java-bahia-2016.htm"
@@ -235,7 +242,7 @@ class DbInitializer : CommandLineRunner {
         palestraUfba122016.tipoHistorico = TipoHistorico.PALESTRAS_APLICADAS
         historicos.add(palestraUfba122016)
 
-        var palestraUnime112016 = Historico("Spring Data JPA")
+        val palestraUnime112016 = Historico("Spring Data JPA")
         palestraUnime112016.anoFim = "2016"
         palestraUnime112016.descricao = "II Semana de Ciências, Tecnologia e Sustentabilidade da Unime"
         palestraUnime112016.linkReferencia = "http://javabahia.blogspot.com/2016/11/ii-semana-de-ciencias-tecnologiae.html"
@@ -243,7 +250,7 @@ class DbInitializer : CommandLineRunner {
         palestraUnime112016.tipoHistorico = TipoHistorico.PALESTRAS_APLICADAS
         historicos.add(palestraUnime112016)
 
-        var palestraCairu102016 = Historico("Spring Data JPA")
+        val palestraCairu102016 = Historico("Spring Data JPA")
         palestraCairu102016.anoFim = "2016"
         palestraCairu102016.descricao = "III Simpósio de Tecnologia da Informação da Faculdade Visconde de Cairu"
         palestraCairu102016.linkReferencia = "http://javabahia.blogspot.com/2016/10/iii-simposio-de-tecnologia-da.html"
@@ -251,7 +258,7 @@ class DbInitializer : CommandLineRunner {
         palestraCairu102016.tipoHistorico = TipoHistorico.PALESTRAS_APLICADAS
         historicos.add(palestraCairu102016)
 
-        var palestraFtc102016 = Historico("Spring Data JPA")
+        val palestraFtc102016 = Historico("Spring Data JPA")
         palestraFtc102016.anoFim = "2016"
         palestraFtc102016.descricao = "III Encontro Javabahia nas Universidades 2016"
         palestraFtc102016.linkReferencia = "http://javabahia.blogspot.com/2016/10/iii-encontro-javabahia-nas.html"
@@ -261,7 +268,7 @@ class DbInitializer : CommandLineRunner {
     }
 
     private fun preencheTreinamentos(historicos: MutableList<Historico>) {
-        var treinamentoSpringBoot042017 = Historico("Minicurso de Spring Boot")
+        val treinamentoSpringBoot042017 = Historico("Minicurso de Spring Boot")
         treinamentoSpringBoot042017.anoFim = "2017"
         treinamentoSpringBoot042017.descricao = "Minicurso de Spring Boot I Community Day da Faculdade Visconde de Cairú"
         treinamentoSpringBoot042017.linkReferencia = "https://www.cairu.br/portal/eventos/icommunity_day_TI/"
@@ -269,7 +276,7 @@ class DbInitializer : CommandLineRunner {
         treinamentoSpringBoot042017.tipoHistorico = TipoHistorico.TREINAMENTOS_APLICADOS
         historicos.add(treinamentoSpringBoot042017)
 
-        var treinamentoSpringBoot102018 = Historico("Desenvolvendo Rapidamente Aplicações Web com Spring Boot")
+        val treinamentoSpringBoot102018 = Historico("Desenvolvendo Rapidamente Aplicações Web com Spring Boot")
         treinamentoSpringBoot102018.anoFim = "2018"
         treinamentoSpringBoot102018.descricao = "V Simpósio de Tecnologia da Informação da Faculdade Visconde de Cairú"
         treinamentoSpringBoot102018.linkReferencia = "https://www.cairu.br/portal/noticias/index.php?id=169"
