@@ -6,11 +6,12 @@ import com.fasterxml.jackson.annotation.JsonProperty
 import dev.ivanqueiroz.curriculo.dominio.historico.Historico
 import io.swagger.annotations.ApiModel
 import io.swagger.annotations.ApiModelProperty
-import org.springframework.hateoas.ResourceSupport
-import org.springframework.hateoas.mvc.ControllerLinkBuilder
+import org.springframework.hateoas.RepresentationModel
+import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo
+import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn
 
 @ApiModel(description = "Classe que representa o curriculo.")
-class HistoricoResource @JsonCreator constructor(@JsonIgnore val historico: Historico) : ResourceSupport() {
+class HistoricoResource @JsonCreator constructor(@JsonIgnore val historico: Historico) : RepresentationModel<HistoricoResource>() {
 
     @ApiModelProperty(notes = "Identificador único de histórico.", example = "1", required = true, position = 0)
     val id: Long = historico.id
@@ -37,6 +38,6 @@ class HistoricoResource @JsonCreator constructor(@JsonIgnore val historico: Hist
         get() = if ("" == historico.anoFim) "Atual" else historico.anoFim
 
     init {
-        add(ControllerLinkBuilder.linkTo(ControllerLinkBuilder.methodOn(HistoricoRestController::class.java).experiencia(id)).withSelfRel())
+        add(linkTo(methodOn(HistoricoRestController::class.java).experiencia(id)).withSelfRel())
     }
 }

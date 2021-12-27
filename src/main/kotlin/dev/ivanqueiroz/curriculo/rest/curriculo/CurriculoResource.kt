@@ -3,21 +3,18 @@ package dev.ivanqueiroz.curriculo.rest.curriculo
 import com.fasterxml.jackson.annotation.JsonCreator
 import com.fasterxml.jackson.annotation.JsonIgnore
 import com.fasterxml.jackson.annotation.JsonProperty
-import dev.ivanqueiroz.curriculo.dominio.conhecimento.Conhecimento
-import dev.ivanqueiroz.curriculo.dominio.contato.Contato
 import dev.ivanqueiroz.curriculo.dominio.curriculo.Curriculo
-import dev.ivanqueiroz.curriculo.dominio.historico.Historico
 import dev.ivanqueiroz.curriculo.rest.conhecimento.ConhecimentoResource
 import dev.ivanqueiroz.curriculo.rest.contato.ContatoResource
 import dev.ivanqueiroz.curriculo.rest.historico.HistoricoResource
 import io.swagger.annotations.ApiModel
 import io.swagger.annotations.ApiModelProperty
-import org.springframework.hateoas.ResourceSupport
-import org.springframework.hateoas.mvc.ControllerLinkBuilder
-import org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo
+import org.springframework.hateoas.RepresentationModel
+import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo
+import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn
 
 @ApiModel(description = "Classe que representa o curriculo.")
-class CurriculoResource @JsonCreator constructor(@JsonIgnore val curriculo: Curriculo) : ResourceSupport() {
+class CurriculoResource @JsonCreator constructor(@JsonIgnore val curriculo: Curriculo) : RepresentationModel<CurriculoResource>() {
 
     @ApiModelProperty(notes = "Identificador único do curriculo.", example = "1", required = true, position = 0)
     val id: Long = curriculo.id
@@ -40,18 +37,18 @@ class CurriculoResource @JsonCreator constructor(@JsonIgnore val curriculo: Curr
 
     @ApiModelProperty(notes = "Lista com o históriocos de experiências, formações e atividades", example = "Formação, Palestras etc", position = 1)
     @JsonProperty("historicos")
-    val historicos: List<HistoricoResource>? = curriculo.historicos.orEmpty().map { h -> HistoricoResource(h) }
+    val historicos: List<HistoricoResource> = curriculo.historicos.orEmpty().map { h -> HistoricoResource(h) }
 
     @ApiModelProperty(notes = "Lista de meios de contato", example = "Telefone, email.", position = 1)
     @JsonProperty("contatos")
-    val contatos: List<ContatoResource>? = curriculo.contatos.orEmpty().map { c -> ContatoResource(c) }
+    val contatos: List<ContatoResource> = curriculo.contatos.orEmpty().map { c -> ContatoResource(c) }
 
     @ApiModelProperty(notes = "Lista de conhecimentos", example = "Telefone, email.", position = 1)
     @JsonProperty("conhecimentos")
-    val conhecimentos: List<ConhecimentoResource>? = curriculo.conhecimentos.orEmpty().map { c -> ConhecimentoResource(c) }
+    val conhecimentos: List<ConhecimentoResource> = curriculo.conhecimentos.orEmpty().map { c -> ConhecimentoResource(c) }
 
     init {
-        add(linkTo(ControllerLinkBuilder.methodOn(CurriculoRestController::class.java).obterCurriculo()).withSelfRel())
+        add(linkTo(methodOn(CurriculoRestController::class.java).obterCurriculo()).withSelfRel())
     }
 
 }

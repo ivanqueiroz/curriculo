@@ -7,12 +7,12 @@ import dev.ivanqueiroz.curriculo.dominio.conhecimento.Conhecimento
 import dev.ivanqueiroz.curriculo.dominio.conhecimento.TipoConhecimento
 import io.swagger.annotations.ApiModel
 import io.swagger.annotations.ApiModelProperty
-import org.springframework.hateoas.ResourceSupport
-import org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo
-import org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn
+import org.springframework.hateoas.RepresentationModel
+import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo
+import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn
 
 @ApiModel(description = "Classe que representa um conhecimento adquirido.")
-class ConhecimentoResource @JsonCreator constructor(@JsonIgnore val conhecimento: Conhecimento) : ResourceSupport() {
+class ConhecimentoResource @JsonCreator constructor(@JsonIgnore val conhecimento: Conhecimento) : RepresentationModel<ConhecimentoResource>() {
 
     @ApiModelProperty(notes = "Identificador único de conhecimento.", example = "1", required = true, position = 0)
     val id: Long = conhecimento.id
@@ -25,33 +25,37 @@ class ConhecimentoResource @JsonCreator constructor(@JsonIgnore val conhecimento
     @JsonProperty("valorNivel")
     val valorNivel: Float = conhecimento.nivel
 
-    @ApiModelProperty(notes = "Descrição baseado no nível e tipo do conhecimento.", example = "Iniciante, Proficiente, Especialista e Mestre para específicos. Básico, Intermediário e Avançado para línguas", position = 3)
+    @ApiModelProperty(
+        notes = "Descrição baseado no nível e tipo do conhecimento.",
+        example = "Iniciante, Proficiente, Especialista e Mestre para específicos. Básico, Intermediário e Avançado para línguas",
+        position = 3
+    )
     @JsonProperty("descricaoNivel")
     var descricaoNivel: String = ""
         get() {
             if (conhecimento.tipoConhecimento == TipoConhecimento.ESPECIFICO) {
-                if (conhecimento.nivel < 0.25f) {
-                    return "Iniciante"
+                return if (conhecimento.nivel < 0.25f) {
+                    "Iniciante"
                 } else if (0.25f >= conhecimento.nivel && conhecimento.nivel < 0.75f) {
-                    return "Proficiente"
+                    "Proficiente"
                 } else if (conhecimento.nivel >= 0.75f || conhecimento.nivel < 1.0f) {
-                    return "Especialista"
+                    "Especialista"
                 } else if (conhecimento.nivel == 1.0f) {
-                    return "Mestre"
+                    "Mestre"
                 } else {
-                    return "Iniciante"
+                    "Iniciante"
                 }
             } else {
-                if (conhecimento.nivel < 0.25f) {
-                    return "Instrumental"
+                return if (conhecimento.nivel < 0.25f) {
+                    "Instrumental"
                 } else if (0.25f >= conhecimento.nivel && conhecimento.nivel < 0.75f) {
-                    return "Básico"
+                    "Básico"
                 } else if (conhecimento.nivel >= 0.75f || conhecimento.nivel < 1.0f) {
-                    return "Intermediário"
+                    "Intermediário"
                 } else if (conhecimento.nivel == 1.0f) {
-                    return "Avançado"
+                    "Avançado"
                 } else {
-                    return "Instrumental"
+                    "Instrumental"
                 }
             }
         }
