@@ -1,14 +1,14 @@
 package dev.ivanqueiroz.curriculo.web.curriculo
 
 import dev.ivanqueiroz.curriculo.web.util.ContatoCssView
+import io.swagger.v3.oas.annotations.Hidden
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.RequestMapping
-import springfox.documentation.annotations.ApiIgnore
 
 @Controller
-@ApiIgnore
+@Hidden
 class CurriculoController {
 
     @Autowired
@@ -16,8 +16,8 @@ class CurriculoController {
 
     @RequestMapping("/")
     fun index(model: Model): String {
-        val curriculo = curriculoService.obterCurriculoPortugues();
-        model.addAttribute("curriculo", curriculo);
+        val curriculo = curriculoService.obterCurriculoPortugues()
+        model.addAttribute("curriculo", curriculo)
 
         val formacoes = curriculoService.obterHistoricoFormacao()
         model.addAttribute("formacoes", formacoes)
@@ -37,10 +37,10 @@ class CurriculoController {
         val linguas = curriculoService.obterConhecimentosLinguas()
         model.addAttribute("linguas", linguas)
 
-        val palestras = curriculoService.obterHistoricoPalestras();
+        val palestras = curriculoService.obterHistoricoPalestras()
         model.addAttribute("palestras", palestras)
 
-        return "index";
+        return "index"
     }
 
 }

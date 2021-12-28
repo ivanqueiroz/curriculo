@@ -5,30 +5,28 @@ import com.fasterxml.jackson.annotation.JsonIgnore
 import com.fasterxml.jackson.annotation.JsonProperty
 import dev.ivanqueiroz.curriculo.dominio.conhecimento.Conhecimento
 import dev.ivanqueiroz.curriculo.dominio.conhecimento.TipoConhecimento
-import io.swagger.annotations.ApiModel
-import io.swagger.annotations.ApiModelProperty
+import io.swagger.v3.oas.annotations.media.Schema
 import org.springframework.hateoas.RepresentationModel
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn
 
-@ApiModel(description = "Classe que representa um conhecimento adquirido.")
+@Schema(description = "Classe que representa um conhecimento adquirido.")
 class ConhecimentoResource @JsonCreator constructor(@JsonIgnore val conhecimento: Conhecimento) : RepresentationModel<ConhecimentoResource>() {
 
-    @ApiModelProperty(notes = "Identificador único de conhecimento.", example = "1", required = true, position = 0)
+    @Schema(description = "Identificador único de conhecimento.", example = "1", required = true)
     val id: Long = conhecimento.id
 
-    @ApiModelProperty(notes = "Assunto do conhecimento.", example = "Java", position = 1)
+    @Schema(description = "Assunto do conhecimento.", example = "Java")
     @JsonProperty("assunto")
     val assunto: String = conhecimento.titulo
 
-    @ApiModelProperty(notes = "Valor do nível de conhecimento. De 0.0 a 1.0.", example = "0.75", position = 2)
+    @Schema(description = "Valor do nível de conhecimento. De 0.0 a 1.0.", example = "0.75")
     @JsonProperty("valorNivel")
     val valorNivel: Float = conhecimento.nivel
 
-    @ApiModelProperty(
-        notes = "Descrição baseado no nível e tipo do conhecimento.",
-        example = "Iniciante, Proficiente, Especialista e Mestre para específicos. Básico, Intermediário e Avançado para línguas",
-        position = 3
+    @Schema(
+        description = "Descrição baseado no nível e tipo do conhecimento.",
+        example = "Iniciante, Proficiente, Especialista e Mestre para específicos. Básico, Intermediário e Avançado para línguas"
     )
     @JsonProperty("descricaoNivel")
     var descricaoNivel: String = ""

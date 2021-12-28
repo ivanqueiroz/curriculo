@@ -4,35 +4,34 @@ import com.fasterxml.jackson.annotation.JsonCreator
 import com.fasterxml.jackson.annotation.JsonIgnore
 import com.fasterxml.jackson.annotation.JsonProperty
 import dev.ivanqueiroz.curriculo.dominio.historico.Historico
-import io.swagger.annotations.ApiModel
-import io.swagger.annotations.ApiModelProperty
+import io.swagger.v3.oas.annotations.media.Schema
 import org.springframework.hateoas.RepresentationModel
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn
 
-@ApiModel(description = "Classe que representa uma experiência profissional.")
+@Schema(description = "Classe que representa uma experiência profissional.")
 class ExperienciaResource @JsonCreator constructor(@JsonIgnore val historico: Historico) : RepresentationModel<ExperienciaResource>() {
 
-    @ApiModelProperty(notes = "Identificador único de experiência.", example = "1", required = true, position = 0)
+    @Schema(description = "Identificador único de experiência.", example = "1", required = true)
     val id: Long = historico.id
 
-    @ApiModelProperty(notes = "Nome da empresa trabalhada.", example = "Indra", position = 1)
+    @Schema(description = "Nome da empresa trabalhada.", example = "Indra")
     @JsonProperty("empresa")
     val empresa: String = historico.instituicao
 
-    @ApiModelProperty(notes = "Cargo ocupado durante a experiência.", example = "Analista de Sistemas", position = 2)
+    @Schema(description = "Cargo ocupado durante a experiência.", example = "Analista de Sistemas")
     @JsonProperty("cargo")
     val titulo: String = historico.titulo
 
-    @ApiModelProperty(notes = "Resumo das atividades exercidas.", example = "Monitoria e suporte da infra de telefonia...", position = 3)
+    @Schema(description = "Resumo das atividades exercidas.", example = "Monitoria e suporte da infra de telefonia...")
     @JsonProperty("resumo")
     val resumo: String = historico.descricao
 
-    @ApiModelProperty(notes = "Ano do início da experiência.", example = "2016", position = 4)
+    @Schema(description = "Ano do início da experiência.", example = "2016")
     @JsonProperty("inicio")
     val anoInicio: String = historico.anoInicio
 
-    @ApiModelProperty(notes = "Ano do fim da experiência.", example = "2017", position = 5)
+    @Schema(description = "Ano do fim da experiência.", example = "2017")
     @JsonProperty("fim")
     var anoFim: String = historico.anoFim
         get() = if ("" == historico.anoFim) "Atual" else historico.anoFim

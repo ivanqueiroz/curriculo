@@ -4,22 +4,21 @@ import com.fasterxml.jackson.annotation.JsonCreator
 import com.fasterxml.jackson.annotation.JsonIgnore
 import dev.ivanqueiroz.curriculo.dominio.contato.Contato
 import dev.ivanqueiroz.curriculo.dominio.contato.TipoContato
-import io.swagger.annotations.ApiModel
-import io.swagger.annotations.ApiModelProperty
+import io.swagger.v3.oas.annotations.media.Schema
 import org.springframework.hateoas.RepresentationModel
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn
 
-@ApiModel(description = "Classe que representa um meio de contato.")
+@Schema(description = "Classe que representa um meio de contato.")
 class ContatoResource @JsonCreator constructor(@JsonIgnore val contato: Contato) : RepresentationModel<ContatoResource>() {
 
-    @ApiModelProperty(notes = "Identificador único de contato.", example = "1", required = true, position = 0)
+    @Schema(description = "Identificador único de contato.", example = "1", required = true)
     val id: Long = contato.id
 
-    @ApiModelProperty(notes = "Valor do contato.", example = "+5571999999999, email@contato.com", position = 1)
+    @Schema(description = "Valor do contato.", example = "+5571999999999, email@contato.com")
     val valor: String = contato.valor
 
-    @ApiModelProperty(notes = "Tipos de contato.", example = "NENHUM, TELEFONE, EMAIL, SKYPE, FACEBOOK, TWITTER e LINKEDIN", position = 2)
+    @Schema(description = "Tipos de contato.", example = "NENHUM, TELEFONE, EMAIL, SKYPE, FACEBOOK, TWITTER e LINKEDIN")
     val tipoContato: TipoContato = contato.tipoContato
 
     init {
