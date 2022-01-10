@@ -1,0 +1,9 @@
+spring:
+  sql:
+    init:
+      encoding: UTF-8
+  datasource:
+    url: 'jdbc:postgresql://localhost:5432/curriculo-dev'
+    username: ivan
+    password: curriculo
+

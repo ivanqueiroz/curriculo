@@ -1,11 +1,9 @@
 package dev.ivanqueiroz.curriculo.rest.contato
 
-import dev.ivanqueiroz.curriculo.dominio.contato.Contato
 import dev.ivanqueiroz.curriculo.dominio.contato.ContatoRepository
 import dev.ivanqueiroz.curriculo.dominio.contato.TipoContato
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
-import java.lang.RuntimeException
 
 @Service
 class ContatoRestService {

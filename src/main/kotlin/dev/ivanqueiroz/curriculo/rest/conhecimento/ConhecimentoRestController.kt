@@ -25,16 +25,18 @@ class ConhecimentoRestController {
 
     @Operation(summary = "Obter todos os conhecimentos")
     @GetMapping("/lista")
-    fun conhecimentos(): ResponseEntity<List<ConhecimentoResource>>{
+    fun conhecimentos(): ResponseEntity<List<ConhecimentoResource>> {
         val todosConhecimentos = conhecimentoRestService.obterTodosConhecimentos()
-        return ResponseEntity(todosConhecimentos,HttpStatus.OK)
+        return ResponseEntity(todosConhecimentos, HttpStatus.OK)
     }
 
     @Operation(summary = "Obter todos os conhecimentos referentes a um assunto informado")
     @GetMapping
-    fun conhecimentosPorAssunto(@RequestParam("assunto") assunto: String):ResponseEntity<List<ConhecimentoResource>>{
-        val conhecimentosPeloAssunto = conhecimentoRestService.obterConhecimentoPeloAssunto(assunto)
-        return ResponseEntity(conhecimentosPeloAssunto, HttpStatus.OK)
+    fun conhecimentosPorAssunto(@RequestParam(required = false, name = "assunto") assunto: String?): ResponseEntity<List<ConhecimentoResource>> {
+        assunto?.let {
+            val conhecimentosPeloAssunto = conhecimentoRestService.obterConhecimentoPeloAssunto(it)
+            return ResponseEntity(conhecimentosPeloAssunto, HttpStatus.OK)
+        }
+        return conhecimentos()
     }
-
 }

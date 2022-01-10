@@ -3,10 +3,10 @@ version: '3'
 services:
   postgres:
     image: postgres:14.0
-      container_name: postgres-curriculo-dev
-      ports:
-        - "5432:5432"
-      environment: 
-        - POSTGRES_USER=ivan
-        - POSTGRES_PASSWORD=curriculo
-        - POSTGRES_DB=curriculo-dev
+    container_name: postgres-curriculo-dev
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=ivan
+      - POSTGRES_PASSWORD=curriculo
+      - POSTGRES_DB=curriculo-dev
