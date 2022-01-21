@@ -2,7 +2,7 @@ package dev.ivanqueiroz.curriculo.web
 
 import dev.ivanqueiroz.curriculo.CurriculoApplicationTests
 import dev.ivanqueiroz.curriculo.web.curriculo.CurriculoService
-import org.junit.Test
+import org.junit.jupiter.api.Test
 
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest

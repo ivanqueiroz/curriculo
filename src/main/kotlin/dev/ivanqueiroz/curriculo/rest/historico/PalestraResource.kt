@@ -4,39 +4,40 @@ import com.fasterxml.jackson.annotation.JsonCreator
 import com.fasterxml.jackson.annotation.JsonIgnore
 import com.fasterxml.jackson.annotation.JsonProperty
 import dev.ivanqueiroz.curriculo.dominio.historico.Historico
-import io.swagger.annotations.ApiModel
-import io.swagger.annotations.ApiModelProperty
-import org.springframework.hateoas.ResourceSupport
-import org.springframework.hateoas.mvc.ControllerLinkBuilder
+import io.swagger.v3.oas.annotations.media.Schema
+import org.springframework.hateoas.RepresentationModel
+import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo
+import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn
 
-@ApiModel(description = "Classe que representa uma palestra aplicada.")
-class PalestraResource @JsonCreator constructor(@JsonIgnore val historico: Historico) : ResourceSupport() {
 
-    @ApiModelProperty(notes = "Identificador único da palestra.", example = "1", required = true, position = 0)
+@Schema(description = "Classe que representa uma palestra aplicada.")
+class PalestraResource @JsonCreator constructor(@JsonIgnore val historico: Historico) : RepresentationModel<PalestraResource>() {
+
+    @Schema(description = "Identificador único da palestra.", example = "1", required = true)
     val id: Long = historico.id
 
-    @ApiModelProperty(notes = "Local onde foi realizada a palestra", example = "UCSAL", position = 1)
+    @Schema(description = "Local onde foi realizada a palestra", example = "UCSAL")
     @JsonProperty("local")
     val empresa: String = historico.instituicao
 
-    @ApiModelProperty(notes = "Titulo da palestra.", example = "Neo4J no mundo real", position = 2)
+    @Schema(description = "Titulo da palestra.", example = "Neo4J no mundo real")
     @JsonProperty("titulo")
     val titulo: String = historico.titulo
 
-    @ApiModelProperty(notes = "Nome do evento o qual a palestra foi aplicada.", example = "Simpósio de TI", position = 3)
+    @Schema(description = "Nome do evento o qual a palestra foi aplicada.", example = "Simpósio de TI")
     @JsonProperty("evento")
     val resumo: String = historico.descricao
 
-    @ApiModelProperty(notes = "Ano da ocorrência da palestra.", example = "2017", position = 4)
+    @Schema(description = "Ano da ocorrência da palestra.", example = "2017")
     @JsonProperty("ano")
     var anoFim: String = historico.anoFim
         get() = if ("" == historico.anoFim) "Atual" else historico.anoFim
 
-    @ApiModelProperty(notes = "Link com informações do treinamento.", example = "http://www.nosqlba.org/2017/index.html", position = 5)
+    @Schema(description = "Link com informações do treinamento.", example = "http://www.nosqlba.org/2017/index.html")
     @JsonProperty("linkReferencia")
     val linkReferencia: String = historico.linkReferencia
 
     init {
-        add(ControllerLinkBuilder.linkTo(ControllerLinkBuilder.methodOn(HistoricoRestController::class.java).palestra(id)).withSelfRel())
+        add(linkTo(methodOn(HistoricoRestController::class.java).palestra(id)).withSelfRel())
     }
 }

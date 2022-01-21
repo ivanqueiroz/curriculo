@@ -1,0 +1,27 @@
+package dev.ivanqueiroz.curriculo.infraestrutura.config
+
+import dev.ivanqueiroz.curriculo.util.JwtUtil
+import org.springframework.security.core.context.SecurityContextHolder
+import org.springframework.web.filter.OncePerRequestFilter
+import javax.servlet.FilterChain
+import javax.servlet.http.HttpServletRequest
+import javax.servlet.http.HttpServletResponse
+
+class JwtAuthenticationFilter(
+    private val jwtUtil: JwtUtil
+) : OncePerRequestFilter() {
+    override fun doFilterInternal(request: HttpServletRequest, response: HttpServletResponse, filterChain: FilterChain) {
+        val token = request.getHeader("Authorization")
+        val jwtToken = getTokenDetail(token)
+        if (jwtUtil.isValid(jwtToken)) {
+            val authentication = jwtUtil.getAuthentication(jwtToken)
+            SecurityContextHolder.getContext().authentication = authentication
+        }
+        filterChain.doFilter(request, response)
+    }
+
+    private fun getTokenDetail(token: String?): String? {
+        return token?.substringAfter("Bearer ")
+    }
+
+}

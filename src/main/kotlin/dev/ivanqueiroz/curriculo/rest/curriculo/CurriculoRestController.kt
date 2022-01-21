@@ -1,9 +1,7 @@
 package dev.ivanqueiroz.curriculo.rest.curriculo
 
-import dev.ivanqueiroz.curriculo.rest.historico.ExperienciaResource
-import dev.ivanqueiroz.curriculo.web.curriculo.CurriculoService
-import io.swagger.annotations.Api
-import io.swagger.annotations.ApiOperation
+import io.swagger.v3.oas.annotations.Operation
+import io.swagger.v3.oas.annotations.tags.Tag
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpEntity
 import org.springframework.http.HttpStatus
@@ -14,14 +12,14 @@ import org.springframework.web.bind.annotation.RestController
 
 @RestController
 @RequestMapping("/curriculo")
-@Api(value = "Curriculo", description = "Representação do curriculo completo")
+@Tag(name = "Curriculo", description = "Representação do curriculo completo")
 class CurriculoRestController {
 
     @Autowired
     lateinit var curriculoRestService: CurriculoRestService
 
     @GetMapping
-    @ApiOperation(value = "Obter curriculo.")
+    @Operation(summary = "Obter curriculo.")
     fun obterCurriculo(): HttpEntity<CurriculoResource> {
         return ResponseEntity(curriculoRestService.obterCurriculoPortugues(), HttpStatus.OK)
     }
