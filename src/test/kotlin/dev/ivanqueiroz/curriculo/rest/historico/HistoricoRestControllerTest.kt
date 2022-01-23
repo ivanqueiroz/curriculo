@@ -14,7 +14,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders
 
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@TestPropertySource(locations = ["classpath:teste.properties"])
+@TestPropertySource(locations = ["classpath:application.yml"])
 class HistoricoRestControllerTest : CurriculoApplicationTests() {
 
     @LocalServerPort
