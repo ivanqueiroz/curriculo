@@ -27,6 +27,7 @@ class SecurityConfig(
             ?.antMatchers(HttpMethod.GET, "/contatos/**")?.permitAll()
             ?.antMatchers(HttpMethod.GET, "/contatos/**")?.permitAll()
             ?.antMatchers(HttpMethod.GET, "/historicos/**")?.permitAll()
+            ?.antMatchers(HttpMethod.GET, "/")?.permitAll()
             ?.antMatchers(HttpMethod.POST, "/login")?.permitAll()
             ?.anyRequest()
             ?.authenticated()
