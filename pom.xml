@@ -122,6 +122,7 @@
                     <include>**/*.png</include>
                     <include>**/*.jpg</include>
                     <include>**/*.gif</include>
+                    <include>**/*.ico</include>
                 </includes>
                 <excludes>
                     <exclude>**/*.ttf</exclude>
