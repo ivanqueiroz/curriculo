@@ -1,21 +1,15 @@
 package dev.ivanqueiroz.curriculo.rest.historico
 
-import dev.ivanqueiroz.curriculo.dominio.historico.Historico
 import dev.ivanqueiroz.curriculo.dominio.historico.HistoricoRepository
 import dev.ivanqueiroz.curriculo.dominio.historico.TipoHistorico
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
-import java.lang.RuntimeException
 
 @Service
 class HistoricoRestService {
 
     @Autowired
     private lateinit var historicoRepository: HistoricoRepository
-
-    fun obtertTodosHistoricos(): List<Historico>{
-        return historicoRepository.findAll();
-    }
 
     fun obterTodasExperiencias(): List<ExperienciaResource> {
         val historicos = historicoRepository.findAllByTipoHistorico(TipoHistorico.EXPERIENCIA)
@@ -65,5 +59,11 @@ class HistoricoRestService {
 
     fun obterTreinamentoPorId(id: Long): TreinamentoResource {
         return TreinamentoResource(historicoRepository.findByIdAndTipoHistorico(id, TipoHistorico.CURSOS_APLICADOS).orElseThrow { RuntimeException("Registro não encontrado") })
+    }
+
+    fun inserirExperiencia(experienciaResource: ExperienciaResource) {
+        experienciaResource.let {
+
+        }
     }
 }

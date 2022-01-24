@@ -19,9 +19,8 @@ class HistoricoRestController {
     @Autowired
     lateinit var historicoRestService: HistoricoRestService
 
-    fun todos(): ResponseEntity<List<HistoricoResource>>{
-        val historicos= historicoRestService.obtertTodosHistoricos().map { h-> HistoricoResource(h) }
-        return ResponseEntity(historicos, HttpStatus.OK)
+    fun experiencia(experienciaResource: ExperienciaResource) {
+
     }
 
     @Operation(summary = "Obter todas as experiências")
