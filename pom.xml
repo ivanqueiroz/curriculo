@@ -119,6 +119,9 @@
                     <include>**/*.xml</include>
                     <include>**/*.yml</include>
                     <include>**/*.sql</include>
+                    <include>**/*.png</include>
+                    <include>**/*.jpg</include>
+                    <include>**/*.gif</include>
                 </includes>
                 <excludes>
                     <exclude>**/*.ttf</exclude>
