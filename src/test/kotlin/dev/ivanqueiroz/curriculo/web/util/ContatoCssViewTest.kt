@@ -2,14 +2,12 @@ package dev.ivanqueiroz.curriculo.web.util
 
 import dev.ivanqueiroz.curriculo.dominio.contato.Contato
 import dev.ivanqueiroz.curriculo.dominio.contato.TipoContato
-import org.junit.Test
-
-import org.junit.Assert.*
-import org.junit.Before
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Test
 
 class ContatoCssViewTest {
 
-    @Before
+    @BeforeEach
     fun before(){
 
     }

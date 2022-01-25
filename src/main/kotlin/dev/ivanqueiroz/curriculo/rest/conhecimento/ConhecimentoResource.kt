@@ -1,57 +1,60 @@
 package dev.ivanqueiroz.curriculo.rest.conhecimento
 
-import com.fasterxml.jackson.annotation.JsonCreator
-import com.fasterxml.jackson.annotation.JsonIgnore
 import com.fasterxml.jackson.annotation.JsonProperty
-import dev.ivanqueiroz.curriculo.dominio.conhecimento.Conhecimento
 import dev.ivanqueiroz.curriculo.dominio.conhecimento.TipoConhecimento
-import io.swagger.annotations.ApiModel
-import io.swagger.annotations.ApiModelProperty
-import org.springframework.hateoas.ResourceSupport
-import org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo
-import org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn
+import io.swagger.v3.oas.annotations.media.Schema
+import org.springframework.hateoas.RepresentationModel
+import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo
+import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn
 
-@ApiModel(description = "Classe que representa um conhecimento adquirido.")
-class ConhecimentoResource @JsonCreator constructor(@JsonIgnore val conhecimento: Conhecimento) : ResourceSupport() {
+@Schema(description = "Classe que representa um conhecimento adquirido.")
+data class ConhecimentoResource(
 
-    @ApiModelProperty(notes = "Identificador único de conhecimento.", example = "1", required = true, position = 0)
-    val id: Long = conhecimento.id
+    @Schema(description = "Identificador único de conhecimento.", example = "1", required = true)
+    val id: Long = 0L,
 
-    @ApiModelProperty(notes = "Assunto do conhecimento.", example = "Java", position = 1)
+    @Schema(description = "Assunto do conhecimento.", example = "Java")
     @JsonProperty("assunto")
-    val assunto: String = conhecimento.titulo
+    val assunto: String = "",
 
-    @ApiModelProperty(notes = "Valor do nível de conhecimento. De 0.0 a 1.0.", example = "0.75", position = 2)
+    @Schema(description = "Valor do nível de conhecimento. De 0.0 a 1.0.", example = "0.75")
     @JsonProperty("valorNivel")
-    val valorNivel: Float = conhecimento.nivel
+    val valorNivel: Float = 0F,
 
-    @ApiModelProperty(notes = "Descrição baseado no nível e tipo do conhecimento.", example = "Iniciante, Proficiente, Especialista e Mestre para específicos. Básico, Intermediário e Avançado para línguas", position = 3)
+    @Schema(description = "Tipo de conhecimento.", example = "ESPECIFICO, LINGUAS")
+    val tipoConhecimento: TipoConhecimento
+) : RepresentationModel<ConhecimentoResource>() {
+
+    @Schema(
+        description = "Descrição baseado no nível e tipo do conhecimento.",
+        example = "Iniciante, Proficiente, Especialista e Mestre para específicos. Básico, Intermediário e Avançado para línguas"
+    )
     @JsonProperty("descricaoNivel")
     var descricaoNivel: String = ""
         get() {
-            if (conhecimento.tipoConhecimento == TipoConhecimento.ESPECIFICO) {
-                if (conhecimento.nivel < 0.25f) {
-                    return "Iniciante"
-                } else if (0.25f >= conhecimento.nivel && conhecimento.nivel < 0.75f) {
-                    return "Proficiente"
-                } else if (conhecimento.nivel >= 0.75f || conhecimento.nivel < 1.0f) {
-                    return "Especialista"
-                } else if (conhecimento.nivel == 1.0f) {
-                    return "Mestre"
+            if (tipoConhecimento == TipoConhecimento.ESPECIFICO) {
+                return if (valorNivel < 0.25f) {
+                    "Iniciante"
+                } else if (0.25f >= valorNivel && valorNivel < 0.75f) {
+                    "Proficiente"
+                } else if (valorNivel >= 0.75f || valorNivel < 1.0f) {
+                    "Especialista"
+                } else if (valorNivel == 1.0f) {
+                    "Mestre"
                 } else {
-                    return "Iniciante"
+                    "Iniciante"
                 }
             } else {
-                if (conhecimento.nivel < 0.25f) {
-                    return "Instrumental"
-                } else if (0.25f >= conhecimento.nivel && conhecimento.nivel < 0.75f) {
-                    return "Básico"
-                } else if (conhecimento.nivel >= 0.75f || conhecimento.nivel < 1.0f) {
-                    return "Intermediário"
-                } else if (conhecimento.nivel == 1.0f) {
-                    return "Avançado"
+                return if (valorNivel < 0.25f) {
+                    "Instrumental"
+                } else if (0.25f >= valorNivel && valorNivel < 0.75f) {
+                    "Básico"
+                } else if (valorNivel >= 0.75f || valorNivel < 1.0f) {
+                    "Intermediário"
+                } else if (valorNivel == 1.0f) {
+                    "Avançado"
                 } else {
-                    return "Instrumental"
+                    "Instrumental"
                 }
             }
         }

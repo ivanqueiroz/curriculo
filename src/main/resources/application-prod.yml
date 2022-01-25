@@ -1,0 +1,9 @@
+spring:
+  datasource:
+    driverClassName: org.postgresql.Driver
+    tomcat:
+      remove-abandoned: true
+      max-active: 10
+      max-idle: 5
+      min-idle: 2
+      initial-size: 5
