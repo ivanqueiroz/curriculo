@@ -44,7 +44,14 @@ class CurriculoResource @JsonCreator constructor(@JsonIgnore val curriculo: Curr
 
     @Schema(description = "Lista de conhecimentos", example = "Telefone, email.")
     @JsonProperty("conhecimentos")
-    val conhecimentos: List<ConhecimentoResource> = curriculo.conhecimentos.orEmpty().map { c -> ConhecimentoResource(c) }
+    val conhecimentos: List<ConhecimentoResource> = curriculo.conhecimentos.orEmpty().map { conhecimento ->
+        ConhecimentoResource(
+            id = conhecimento.id,
+            tipoConhecimento = conhecimento.tipoConhecimento,
+            assunto = conhecimento.titulo,
+            valorNivel = conhecimento.nivel
+        )
+    }
 
     init {
         add(linkTo(methodOn(CurriculoRestController::class.java).obterCurriculo()).withSelfRel())
