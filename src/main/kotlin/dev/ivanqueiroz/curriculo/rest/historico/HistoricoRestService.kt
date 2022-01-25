@@ -5,7 +5,6 @@ import dev.ivanqueiroz.curriculo.dominio.historico.HistoricoRepository
 import dev.ivanqueiroz.curriculo.dominio.historico.TipoHistorico
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
-import java.lang.RuntimeException
 
 @Service
 class HistoricoRestService {
@@ -13,18 +12,31 @@ class HistoricoRestService {
     @Autowired
     private lateinit var historicoRepository: HistoricoRepository
 
-    fun obtertTodosHistoricos(): List<Historico>{
-        return historicoRepository.findAll();
-    }
-
     fun obterTodasExperiencias(): List<ExperienciaResource> {
         val historicos = historicoRepository.findAllByTipoHistorico(TipoHistorico.EXPERIENCIA)
-        val experiencias = historicos.map { historico -> ExperienciaResource(historico) }
-        return experiencias
+        return historicos.map { historico ->
+            ExperienciaResource(
+                id = historico.id,
+                titulo = historico.titulo,
+                anoInicio = historico.anoInicio,
+                empresa = historico.instituicao,
+                resumo = historico.descricao,
+                anoFim = historico.anoFim
+            )
+        }
     }
 
     fun obterExperienciaPorId(id: Long): ExperienciaResource {
-        return ExperienciaResource(historicoRepository.findByIdAndTipoHistorico(id, TipoHistorico.EXPERIENCIA).orElseThrow { RuntimeException("Registro não encontrado") })
+        historicoRepository.findByIdAndTipoHistorico(id, TipoHistorico.EXPERIENCIA).orElseThrow { RuntimeException("Registro não encontrado") }.let { historico ->
+            return ExperienciaResource(
+                id = historico.id,
+                titulo = historico.titulo,
+                anoInicio = historico.anoInicio,
+                empresa = historico.instituicao,
+                resumo = historico.descricao,
+                anoFim = historico.anoFim
+            )
+        }
     }
 
     fun obterTodasCertificacoes(): List<CertificacaoResource> {
@@ -65,5 +77,32 @@ class HistoricoRestService {
 
     fun obterTreinamentoPorId(id: Long): TreinamentoResource {
         return TreinamentoResource(historicoRepository.findByIdAndTipoHistorico(id, TipoHistorico.CURSOS_APLICADOS).orElseThrow { RuntimeException("Registro não encontrado") })
+    }
+
+    fun inserirExperiencia(experienciaResource: ExperienciaResource): Historico {
+        val historico = Historico(
+            instituicao = experienciaResource.empresa,
+            anoInicio = experienciaResource.anoInicio,
+            anoFim = experienciaResource.anoFim,
+            descricao = experienciaResource.resumo,
+            titulo = experienciaResource.titulo,
+            tipoHistorico = TipoHistorico.EXPERIENCIA
+        )
+        return historicoRepository.save(historico)
+    }
+
+    fun atualizarExperiencia(experienciaResource: ExperienciaResource): Historico {
+        obterExperienciaPorId(experienciaResource.id).let {
+            val historico = Historico(
+                id = experienciaResource.id,
+                instituicao = experienciaResource.empresa,
+                anoInicio = experienciaResource.anoInicio,
+                anoFim = experienciaResource.anoFim,
+                descricao = experienciaResource.resumo,
+                titulo = experienciaResource.titulo,
+                tipoHistorico = TipoHistorico.EXPERIENCIA
+            )
+            return historicoRepository.save(historico)
+        }
     }
 }

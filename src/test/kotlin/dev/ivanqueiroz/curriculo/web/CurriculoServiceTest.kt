@@ -9,7 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.TestPropertySource
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@TestPropertySource(locations = ["classpath:teste.properties"])
+@TestPropertySource(locations = ["classpath:application.yml"])
 class CurriculoServiceTest : CurriculoApplicationTests(){
 
     @Autowired
@@ -21,6 +21,6 @@ class CurriculoServiceTest : CurriculoApplicationTests(){
 
         print(obterHistoricoFormacao)
 
-        assert(obterHistoricoFormacao.get(0).anoFim.equals("2007"))
+        assert(obterHistoricoFormacao[0].anoFim == "2007")
     }
 }

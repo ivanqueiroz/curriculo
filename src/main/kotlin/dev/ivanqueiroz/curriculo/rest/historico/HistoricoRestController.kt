@@ -6,10 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpEntity
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PathVariable
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.security.access.prepost.PreAuthorize
+import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/historicos")
@@ -19,9 +17,34 @@ class HistoricoRestController {
     @Autowired
     lateinit var historicoRestService: HistoricoRestService
 
-    fun todos(): ResponseEntity<List<HistoricoResource>>{
-        val historicos= historicoRestService.obtertTodosHistoricos().map { h-> HistoricoResource(h) }
-        return ResponseEntity(historicos, HttpStatus.OK)
+    @PostMapping("/experiencias")
+    @PreAuthorize("hasAuthority('LEITURA_ESCRITA')")
+    fun experiencia(@RequestBody experienciaResource: ExperienciaResource): ResponseEntity<ExperienciaResource> {
+        val historico = historicoRestService.inserirExperiencia(experienciaResource)
+        return ResponseEntity(
+            ExperienciaResource(
+                titulo = historico.titulo,
+                anoInicio = historico.anoInicio,
+                empresa = historico.instituicao,
+                resumo = historico.descricao,
+                anoFim = historico.anoFim
+            ), HttpStatus.OK
+        )
+    }
+
+    @PutMapping("/experiencias")
+    @PreAuthorize("hasAuthority('LEITURA_ESCRITA')")
+    fun atualiza(@RequestBody experienciaResource: ExperienciaResource): ResponseEntity<ExperienciaResource> {
+        val historico = historicoRestService.atualizarExperiencia(experienciaResource)
+        return ResponseEntity(
+            ExperienciaResource(
+                titulo = historico.titulo,
+                anoInicio = historico.anoInicio,
+                empresa = historico.instituicao,
+                resumo = historico.descricao,
+                anoFim = historico.anoFim
+            ), HttpStatus.OK
+        )
     }
 
     @Operation(summary = "Obter todas as experiências")
