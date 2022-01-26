@@ -23,6 +23,9 @@ class SecurityConfig(
         http
             ?.csrf()?.disable()
             ?.authorizeHttpRequests()
+            ?.antMatchers(HttpMethod.GET, "/swagger-ui.html")?.permitAll()
+            ?.antMatchers(HttpMethod.GET, "/swagger-ui/**")?.permitAll()
+            ?.antMatchers(HttpMethod.GET, "/v3/api-docs/**")?.permitAll()
             ?.antMatchers(HttpMethod.GET, "/conhecimentos/**")?.permitAll()
             ?.antMatchers(HttpMethod.GET, "/contatos/**")?.permitAll()
             ?.antMatchers(HttpMethod.GET, "/contatos/**")?.permitAll()
