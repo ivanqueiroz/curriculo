@@ -4,13 +4,13 @@
 
 ## Stack
 
-- Kotlin 1.2.71
-  
-- Java 8
-  
-- Spring Boot 2.1.3
-  
-- Swagger 2.9.2
+- Kotlin 1.6.10
+
+- Java 11
+
+- Spring Boot 2.6.2
+
+- OpenApi 1.6.3
   
 
 ## Exemplo de uso
